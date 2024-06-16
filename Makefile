@@ -1,16 +1,18 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 RM = rm -rf
-SRC = philosofers.c add_philosofers.c
+# add_philosofers.c
+SRC = philosofers.c 
 OSRC = $(SRC:.c=.o)
 NAME = philo
 libft = ./libft/libft.a
 ft_printf = ./ft_printf/libftprintf.a
+FSANITIZE = -fsanitize=address
 
 all: $(NAME)
 
 $(NAME) : $(OSRC) $(libft) $(ft_printf)
-	$(CC) $(CFLAGS) $(libft) $(ft_printf) $(OSRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(FSANITIZE) $(libft) $(ft_printf) $(OSRC) -o $(NAME)
 
 $(libft) :
 	$(MAKE) -C ./libft

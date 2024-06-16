@@ -6,20 +6,11 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:38:46 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/11 13:31:22 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/16 11:02:06 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
-
-void    *philo_taking_fork(t_data *data)
-{
-
-    pthread_mutex_lock(&data->to_philo->print);
-    printf("timestamp_in_ms %d has taken a fork\n", data->to_philo->index_philo++);
-    pthread_mutex_unlock(&data->to_philo->print);
-    return (NULL);
-}
 
 // void*   philo_eating(t_data *data)
 // {
@@ -27,16 +18,17 @@ void    *philo_taking_fork(t_data *data)
 //     // printf("timestamp_in_ms %d has taken a fork\n", count++);
 //     pthread_mutex_unlock(&data->to_philo->print);
 // }
-void *routine(void *data)
+void *routine(void *ptr_data)
 {
-    // philo.index_philo = 0;
+    t_data *data = (t_data *)ptr_data;
+    t_philo philo;
+    philo.right_fork = &data->mutex[0];
+    philo.left_fork = &data->mutex[0];
     // philo_taking_fork(data_ptr);
     // philo_eating(data_ptr);
     // philo_sleeping();
     // philo_thinking();
     // philo_died();
-    // pthread_mutex_lock(&info_ptr->to_philo->right_fork);
-    // pthread_mutex_unlock(&info_ptr->to_philo->right_fork);
 	return (NULL);
 }
 
@@ -45,7 +37,7 @@ void	add_philosofers(t_data *data)
 	pthread_t t[data->philos_nbr];
     pthread_mutex_t mutex[data->philos_nbr];
 	int i;
-    
+
 	i = 0;
     data->mutex = mutex;
 	while(i < data->philos_nbr)
