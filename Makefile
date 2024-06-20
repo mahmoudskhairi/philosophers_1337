@@ -12,7 +12,7 @@ FSANITIZE = -fsanitize=address
 all: $(NAME)
 
 $(NAME) : $(OSRC) $(libft) $(ft_printf)
-	$(CC) $(CFLAGS) $(FSANITIZE) $(libft) $(ft_printf) $(OSRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(libft) $(ft_printf) $(OSRC) -o $(NAME)
 
 $(libft) :
 	$(MAKE) -C ./libft
@@ -31,4 +31,5 @@ fclean:
 	$(RM) $(OSRC) $(NAKE)
 	$(MAKE) fclean -C ./libft
 	$(MAKE) fclean -C ./ft_Printf
+re: fclean all
 	

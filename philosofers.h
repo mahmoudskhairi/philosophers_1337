@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:52:26 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/16 16:55:11 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:05:09 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
 #include <stdio.h>//
+#include <sys/time.h>
 
 
 typedef struct s_data
 {
 	int philos_nbr;
-	int timeof_eating;
-	int timeof_sleeping;
-	int timeof_dying;
+	int time_to_eat;
+	int time_to_sleep;
+	int time_to_die;
 	int eat_times;
+    size_t start_time;
     pthread_mutex_t print;
 	// t_philo *to_philo;
 	pthread_mutex_t *mutex;
@@ -43,6 +45,6 @@ typedef struct philo
 }   t_philo;
 
 void	add_philosofers(t_data *data, t_philo *philo);
-void    join_philos(t_data *data, t_philo *philo);
+void    join_threads(t_data *data, t_philo *philo);
 
 #endif
