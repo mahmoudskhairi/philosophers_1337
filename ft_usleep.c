@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_usleep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 15:28:41 by mskhairi          #+#    #+#             */
-/*   Updated: 2023/12/14 12:45:35 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/06/21 20:36:41 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/06/21 20:42:18 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philosofers.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+size_t	get_currect_time(void)
 {
-	const unsigned char	*s;
-	unsigned char		*d;
+	struct timeval	t;
 
-	s = src;
-	d = dst;
-	if (!dst && !src)
-		return (0);
-	if (dst > src)
-	{
-		while (len--)
-		{
-			*(d + len) = *(s + len);
-		}
-	}
-	else
-	{
-		while (len--)
-		{
-			*d++ = *s++;
-		}
-	}
-	return (dst);
+	gettimeofday(&t, NULL);
+	return (t.tv_sec * 1000 + t.tv_usec / 1000);
+}
+
+void	ft_usleep(int time_to_sleep)
+{
+	size_t	current_time;
+
+	current_time = get_currect_time();
+	while (get_currect_time() < current_time + time_to_sleep)
+		;
 }

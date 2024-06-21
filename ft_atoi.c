@@ -1,20 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/09 13:15:32 by mskhairi          #+#    #+#             */
-/*   Updated: 2023/12/26 14:06:47 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/06/21 20:26:16 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/06/21 20:26:36 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philosofers.h"
 
-int	ft_isalnum(int c)
+int	ft_atoi(char *str)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	return (0);
+	int			sign;
+	long long	tot;
+
+	sign = 1;
+	tot = 0;
+    if (!str || !*str)
+	{
+        return (0);
+	}
+	while (*str == 32 || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		tot = (tot * 10) + (*str - 48);
+		str++;
+	}
+    return (sign * tot);
 }

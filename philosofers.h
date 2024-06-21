@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:52:26 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/20 16:05:09 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:42:46 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 #define PHILOSOFERS_H
 
 #include <pthread.h>
-#include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
-#include <stdio.h>//
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
+#define YELLOW "\x1B[33m"
+#define GREEN "\x1B[32m"
+#define WHITE "\x1B[37m"
+#define BLUE "\x1B[34m"
+#define RED "\x1B[31m"
+#define RESET "\x1B[0m"
 
 typedef struct s_data
 {
@@ -44,7 +49,15 @@ typedef struct philo
 	t_data *data;
 }   t_philo;
 
+
+int	ft_atoi(char *str);
 void	add_philosofers(t_data *data, t_philo *philo);
+void print_line(t_philo *philo, char *str, char c);
+void	eating(t_philo *philo);
+void sleeping (t_philo *philo);
+void thinking (t_philo *philo);
+size_t	get_currect_time(void);
+void	ft_usleep(int time_to_sleep);
 void    join_threads(t_data *data, t_philo *philo);
 
 #endif
