@@ -9,7 +9,7 @@ FSANITIZE = -fsanitize=thread
 all: $(NAME)
 
 $(NAME) : $(OSRC) $(libft) philosofers.h
-	$(CC) $(CFLAGS) $(FSANITIZE) $(libft) $(OSRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(libft) $(OSRC) -o $(NAME)
 
 %.o :%c philosofers.h
 	$(CC) -c $(CFLAGS) $< -o $@

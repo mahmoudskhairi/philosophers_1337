@@ -6,55 +6,42 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:49:33 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/22 16:00:14 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/27 19:54:05 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
-void  check_death(t_philo *philo)
+void  check_death(t_data *data, t_philo *philo)
 {
     size_t i;
 
+    i = 0;
+    (void)philo;
     while(1)
     {
-        i = 0;
-        while(i < philo[i].data->philos_nbr)
+        //   printf("==> %zu\n", get_currect_time() - philo[i].last_time2eat);
+        if (get_currect_time() - philo[i].last_time2eat >= data->time_to_die)
         {
-            if (get_currect_time() - philo[i].last_time2eat >= philo[i].data->time_to_die)
-            {
-                pthread_mutex_lock(&philo[i].data->print);
-                printf("%zu %d " RED "died\n" RESET, get_currect_time()
-                    - philo[i].data->start_time, philo[i].index_philo);
-                set_death(philo);
-                pthread_mutex_unlock(&philo[i].data->print);
-                return;
-            }
-            i++;
+            pthread_mutex_lock(&data->print);
+            printf("%zu %d " RED "died\n" RESET, get_currect_time()
+                - data->start_time, philo[i].index_philo);
+            set_death(philo);
+            pthread_mutex_unlock(&data->print);
+            return;
         }
+        i++;
+        if (i == data->philos_nbr)
+            i = 0;
     }
 }
-
-// void  check_death(t_philo *philo)
-// {
-    
-//     // pthread_mutex_lock(&philo->data->death);
-//     if (get_currect_time() - philo->last_time2eat >= philo->data->time_to_die && get_death(philo))
-//     {
-//         pthread_mutex_lock(&philo->data->print);
-//         printf("%zu %d " RED "died\n" RESET, get_currect_time()
-//             - philo->data->start_time, philo->index_philo);
-//         set_death(philo);
-//         pthread_mutex_unlock(&philo->data->print);
-//     }
-//     // pthread_mutex_unlock(&philo->data->death);
-// }
 
 void	*routine(void *philo_)
 {
 	t_philo	*philo;
-
     philo = (t_philo *)philo_;
+    // printf("start time :%zu\n", get_currect_time());
+        // printf("id = %d\n", philo->index_philo);
     if (philo->index_philo % 2 == 0)
         sleeping(philo);
     while (1)
@@ -62,7 +49,7 @@ void	*routine(void *philo_)
         thinking(philo);
         eating(philo);
         sleeping(philo);
-        if (!get_death(philo))
+        if (get_death(philo))
             break;
     }
 	return (NULL);
@@ -73,6 +60,13 @@ void	creat_threads(t_data *data, t_philo *philo)
 	size_t	i;
 
 	i = 0;
+    data->start_time = get_currect_time();
+	while (i < data->philos_nbr)
+	{
+        philo[i].last_time2eat = data->start_time;
+		i++;
+	}
+    i = 0;
 	while (i < data->philos_nbr)
 	{
 		pthread_create(&philo[i].pth, NULL, &routine, (void *)&philo[i]);
@@ -103,8 +97,7 @@ int	main(int ac, char *av[])
 		data.time_to_eat = ft_atoi(av[3]);
 		data.time_to_sleep = ft_atoi(av[4]);
 		data.eat_times = ft_atoi(av[5]);
-        data.start_time = get_currect_time();
-        data.is_died = 1;
+        data.is_died = 0;
 		data.pths = malloc(data.philos_nbr * sizeof(pthread_t));
 		philo = malloc(data.philos_nbr * sizeof(t_philo));
 		if (pthread_mutex_init(&data.print, NULL) != 0)
@@ -119,7 +112,7 @@ int	main(int ac, char *av[])
 		}
 		add_philosofers(&data, philo);
 		creat_threads(&data, philo);
-        check_death(philo);
+        check_death(&data, philo);
 		join_threads(&data, philo);
 		pthread_mutex_destroy(&data.print);
 		pthread_mutex_destroy(&data.death);
