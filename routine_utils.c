@@ -6,56 +6,64 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:38:48 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/27 19:45:50 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:54:54 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
-void	print_line(t_philo *philo, char *str, char c)
-{
-    if (c == 'F')
-	{
-		pthread_mutex_lock(&philo->data->print);
-		printf("%zu %d " YELLOW "%s\n" RESET, get_currect_time()
-				- philo->data->start_time, philo->index_philo, str);
-		pthread_mutex_unlock(&philo->data->print);
-	}
-	else if (c == 'E' )
-	{
-		pthread_mutex_lock(&philo->data->print);
-		printf("%zu %d " GREEN "%s\n" RESET, get_currect_time()
-				- philo->data->start_time, philo->index_philo, str);
-		pthread_mutex_unlock(&philo->data->print);
-	}
-	else if (c == 'S' )
-	{
-		pthread_mutex_lock(&philo->data->print);
-		printf("%zu %d " BLUE "%s\n" RESET, get_currect_time()
-				- philo->data->start_time, philo->index_philo, str);
-		pthread_mutex_unlock(&philo->data->print);
-	}
-}
 // void	print_line(t_philo *philo, char *str, char c)
 // {
-//         (void)c;
-// 		pthread_mutex_lock(&philo->data->print);
-// 		printf("%zu %d %s\n", get_currect_time()
-// 				- philo->data->start_time, philo->index_philo, str);
-// 		pthread_mutex_unlock(&philo->data->print);
+    // if (c == 'F' && !get_death(philo))
+	// {
+	// 	pthread_mutex_lock(&philo->data->print);
+	// 	printf("%zu %d " YELLOW "%s\n" RESET, get_currect_time()
+	// 			- philo->data->start_time, philo->index_philo, str);
+	// 	pthread_mutex_unlock(&philo->data->print);
+	// }
+	// else if (c == 'E' && !get_death(philo))
+	// {
+	// 	pthread_mutex_lock(&philo->data->print);
+	// 	printf("%zu %d " GREEN "%s\n" RESET, get_currect_time()
+	// 			- philo->data->start_time, philo->index_philo, str);
+	// 	pthread_mutex_unlock(&philo->data->print);
+	// }
+	// else if (c == 'S' && !get_death(philo))
+	// {
+	// 	pthread_mutex_lock(&philo->data->print);
+	// 	printf("%zu %d " BLUE "%s\n" RESET, get_currect_time()
+	// 			- philo->data->start_time, philo->index_philo, str);
+	// 	pthread_mutex_unlock(&philo->data->print);
+	// }
 // }
 
-void	eating(t_philo *philo)
+void	print_line(t_philo *philo, char *str)
 {
+    // size_t time = get_currect_time()
+    //             - philo->data->start_time;
+    pthread_mutex_lock(&philo->data->print);
+    if (!get_death(philo))
+    {
+        printf("%zu %d %s\n", get_currect_time()
+                - philo->data->start_time, philo->index_philo, str);
+    }
+    pthread_mutex_unlock(&philo->data->print);
+}
+
+void	eating(t_philo *philo)
+{   
     if (!get_death(philo))
     {
         pthread_mutex_lock(philo->right_fork);
-        print_line(philo, "has taken a fork", 'F');
+        print_line(philo, "has taken a fork");
         pthread_mutex_lock(philo->left_fork);
-        print_line(philo, "has taken a fork", 'F');
-        print_line(philo, "is eating", 'E');
-        ft_usleep(philo->data->time_to_eat);
-        philo->last_time2eat = get_currect_time();
+        print_line(philo, "has taken a fork");
+        print_line(philo, "is eating");
+        pthread_mutex_lock(&philo->eat_mutex);
+        if (get_currect_time() - philo->last_time2eat < philo->data->time_to_die)
+            philo->last_time2eat = get_currect_time();
+        pthread_mutex_unlock(&philo->eat_mutex);
+        ft_usleep(philo->data->time_to_eat, philo);
         pthread_mutex_unlock(philo->right_fork);
         pthread_mutex_unlock(philo->left_fork);
     }
@@ -81,18 +89,13 @@ void	sleeping(t_philo *philo)
 {
     if (!get_death(philo))
     {
-	    print_line(philo, "is sleeping", 'S');
-    	ft_usleep(philo->data->time_to_sleep);
+	    print_line(philo, "is sleeping");
+    	ft_usleep(philo->data->time_to_sleep, philo);
     }
 }
 
 void	thinking(t_philo *philo)
 {
     if (!get_death(philo))
-    {
-        pthread_mutex_lock(&philo->data->print);
-        printf("%zu %d " WHITE "is thinking\n" RESET, get_currect_time()
-                - philo->data->start_time, philo->index_philo);
-        pthread_mutex_unlock(&philo->data->print);
-    }
+       print_line(philo, "is thinking");
 }

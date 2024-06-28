@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:52:26 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:35:20 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:29:46 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct philo
 	int index_philo;
 	pthread_mutex_t *right_fork;
 	pthread_mutex_t *left_fork;
+	pthread_mutex_t eat_mutex;
 	t_data *data;
     size_t last_time2eat;
 }   t_philo;
@@ -55,12 +56,12 @@ typedef struct philo
 
 int	ft_atoi(char *str);
 void	add_philosofers(t_data *data, t_philo *philo);
-void print_line(t_philo *philo, char *str, char c);
+void print_line(t_philo *philo, char *str);
 void	eating(t_philo *philo);
 void sleeping (t_philo *philo);
 void thinking (t_philo *philo);
 size_t	get_currect_time(void);
-void	ft_usleep(int time_to_sleep);
+void	ft_usleep(int time_to_sleep, t_philo *philo);
 void    join_threads(t_data *data, t_philo *philo);
 void  check_death(t_data *data, t_philo *philo);
 int    get_death(t_philo *philo);
