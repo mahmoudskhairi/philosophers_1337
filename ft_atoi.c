@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:26:16 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/21 20:26:36 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/29 10:19:18 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_atoi(char *str)
 {
-	int			sign;
 	long long	tot;
+	int			sign;
 
 	sign = 1;
 	tot = 0;
-    if (!str || !*str)
+	if (!str || !*str)
 	{
-        return (0);
+		return (0);
 	}
 	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
@@ -36,5 +36,5 @@ int	ft_atoi(char *str)
 		tot = (tot * 10) + (*str - 48);
 		str++;
 	}
-    return (sign * tot);
+	return (sign * tot);
 }
