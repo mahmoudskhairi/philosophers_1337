@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:38:48 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/29 18:22:03 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:35:23 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,10 @@ void	eating(t_philo *philo)
 			philo->last_time2eat = get_currect_time();
 		pthread_mutex_unlock(&philo->eat_mutex);
 		ft_usleep(philo->data->time_to_eat, philo);
-        philo->data->nbr_of_meals++;
+		set_num_meals(philo);
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 	}
-}
-
-int	get_death(t_philo *philo)
-{
-	int	tmp;
-
-	pthread_mutex_lock(&philo->data->death);
-	tmp = philo->data->is_died;
-	pthread_mutex_unlock(&philo->data->death);
-	return (tmp);
-}
-
-void	set_death(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->death);
-	philo->data->is_died = 1;
-	pthread_mutex_unlock(&philo->data->death);
 }
 
 void	sleeping(t_philo *philo)

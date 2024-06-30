@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   get_set_death.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/29 10:23:23 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 13:37:13 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/06/30 17:28:46 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/06/30 17:35:15 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
-int	init_data(t_data *data, t_philo **philo, int ac, char *av[])
+int	get_death(t_philo *philo)
 {
-	data->philos_nbr = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
-	data->is_died = 0;
-	*philo = malloc(data->philos_nbr * sizeof(t_philo));
-	if (!*philo)
-		return (0);
-	if (ac == 6)
-		data->eat_times = ft_atoi(av[5]);
-	else
-		data->eat_times = -1;
-	return (1);
+	int	tmp;
+
+	pthread_mutex_lock(&philo->data->death);
+	tmp = philo->data->is_died;
+	pthread_mutex_unlock(&philo->data->death);
+	return (tmp);
+}
+
+void	set_death(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->death);
+	philo->data->is_died = 1;
+	pthread_mutex_unlock(&philo->data->death);
 }

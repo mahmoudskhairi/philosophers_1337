@@ -1,0 +1,9 @@
+# check if args are not numrs      "*"
+# nbr of meals >= 1                "*"
+# nbr of philos >= 1 <= 200        "*"
+# timing >= 60                     "*"
+# check if nbr of philo is 1;      "*"
+# check ft_usleep                   ?
+# check time to die                "*" but "?"            
+# remove printing if the philos eat a minimum nbr of meals!! "???"
+#relink                            "*"

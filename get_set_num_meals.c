@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   get_set_num_meals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/29 10:23:23 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 13:37:13 by mskhairi         ###   ########.fr       */
+/*   Created: 2024/06/30 17:31:12 by mskhairi          #+#    #+#             */
+/*   Updated: 2024/06/30 17:35:12 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
-int	init_data(t_data *data, t_philo **philo, int ac, char *av[])
+void	set_num_meals(t_philo *philo)
 {
-	data->philos_nbr = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
-	data->is_died = 0;
-	*philo = malloc(data->philos_nbr * sizeof(t_philo));
-	if (!*philo)
-		return (0);
-	if (ac == 6)
-		data->eat_times = ft_atoi(av[5]);
-	else
-		data->eat_times = -1;
-	return (1);
+	pthread_mutex_lock(&philo->data->meal_mutex);
+	philo->data->count_meals++;
+	pthread_mutex_unlock(&philo->data->meal_mutex);
+}
+
+int	get_num_meals(t_philo *philo)
+{
+	int count;
+
+	pthread_mutex_lock(&philo->data->meal_mutex);
+	count = philo->data->count_meals;
+	pthread_mutex_unlock(&philo->data->meal_mutex);
+	return (count);
 }

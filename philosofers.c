@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:49:33 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/29 18:20:29 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:39:56 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	*routine(void *philo_)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_;
+	if (philo->data->philos_nbr == 1)
+	{
+		ft_usleep(philo->data->time_to_die, philo);
+		return (NULL);
+	}
 	if (philo->index_philo % 2 == 0)
 		sleeping(philo);
 	while (!get_death(philo))
@@ -30,7 +35,7 @@ void	*routine(void *philo_)
 
 void	creat_threads(t_data *data, t_philo *philo)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	data->start_time = get_currect_time();
@@ -44,7 +49,7 @@ void	creat_threads(t_data *data, t_philo *philo)
 
 void	join_threads(t_data *data, t_philo *philo)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < data->philos_nbr)
@@ -74,9 +79,9 @@ void	join_threads(t_data *data, t_philo *philo)
 //     }
 // }
 
-void    ll()
+void	ll(void)
 {
-    system("leaks philo");
+	system("leaks philo");
 }
 
 int	main(int ac, char *av[])
@@ -84,16 +89,20 @@ int	main(int ac, char *av[])
 	t_data	data;
 	t_philo	*philo;
 
-    // atexit(ll);
+	// atexit(ll);
 	if (ac == 5 || ac == 6)
 	{
-		init_data(&data, &philo, ac, av);
-		if (init_mutex(&data, philo))
+		if (!init_data(&data, &philo, ac, av))
 			return (1);
+		if (!check_args(&data, philo, ac, av) || !init_mutex(&data, philo))
+		{
+			printf("Error\n");
+			return (1);
+		}
 		init_philosofers(&data, philo);
 		creat_threads(&data, philo);
 		check_death(&data, philo);
-        // check_nbr_meals(&data, philo);
+		// check_nbr_meals(&data, philo);
 		join_threads(&data, philo);
 		destroy_mutex(&data, philo);
 		free_all(&data, philo);

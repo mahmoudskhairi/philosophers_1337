@@ -6,15 +6,29 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:17:01 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/29 18:20:16 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:39:44 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosofers.h"
 
+int	check_meals(t_data *data, t_philo *philo, int i)
+{
+	if (get_num_meals(philo) >= data->philos_nbr * data->eat_times)
+	{
+		set_death(philo);
+		pthread_mutex_lock(&data->print);//
+		printf(RED "end of eating !!" RESET "\n"); //
+		pthread_mutex_unlock(&data->print);//
+		pthread_mutex_unlock(&philo[i].eat_mutex);
+		return (1);
+	}
+	return (0);
+}
+
 void	check_death(t_data *data, t_philo *philo)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (1)
@@ -24,19 +38,15 @@ void	check_death(t_data *data, t_philo *philo)
 		{
 			set_death(philo);
 			pthread_mutex_lock(&data->print);
-			printf("%zu %d died\n", get_currect_time()
-					- data->start_time, philo[i].index_philo);
+			printf("%zu %d died\n", get_currect_time() - data->start_time,
+				philo[i].index_philo);
 			pthread_mutex_unlock(&data->print);
 			pthread_mutex_unlock(&philo[i].eat_mutex);
 			return ;
 		}
-        if (data->nbr_of_meals == data->philos_nbr * data->eat_times)
-		{
-			pthread_mutex_unlock(&philo[i].eat_mutex);
-            set_death(&philo[i]);
-            printf( RED "end of eating !!" RESET "\n");
-			return ;
-		}
+		if (data->eat_times != -1)
+			if (check_meals(data, philo, i))
+				return ;
 		pthread_mutex_unlock(&philo[i].eat_mutex);
 		i++;
 		if (i == data->philos_nbr)
