@@ -6,4 +6,5 @@
 # check ft_usleep                   ?
 # check time to die                "*" but "?"            
 # remove printing if the philos eat a minimum nbr of meals!! "???"
-#relink                            "*"
+# relink                            "*"
+# norminette                            "*" except comments
