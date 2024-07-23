@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:49:33 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 17:39:56 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:54:39 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	*routine(void *philo_)
 	philo = (t_philo *)philo_;
 	if (philo->data->philos_nbr == 1)
 	{
+		print_line(philo, "has taken a fork");
 		ft_usleep(philo->data->time_to_die, philo);
 		return (NULL);
 	}
@@ -59,26 +60,6 @@ void	join_threads(t_data *data, t_philo *philo)
 	}
 }
 
-// void    check_nbr_meals(t_data *data, t_philo *philo)
-// {
-//     size_t i;
-
-//     i = 0;
-//     while (1)
-//     {
-// 		if (data->nbr_of_meals == data->philos_nbr * data->eat_times)
-// 		{
-// 			pthread_mutex_unlock(&philo[i].eat_mutex);
-//             set_death(&philo[i]);
-//             printf( RED "end of eating !!" RESET "\n");
-// 			return ;
-// 		}
-// 		i++;
-// 		if (i == data->philos_nbr)
-// 			i = 0;
-//     }
-// }
-
 void	ll(void)
 {
 	system("leaks philo");
@@ -102,7 +83,6 @@ int	main(int ac, char *av[])
 		init_philosofers(&data, philo);
 		creat_threads(&data, philo);
 		check_death(&data, philo);
-		// check_nbr_meals(&data, philo);
 		join_threads(&data, philo);
 		destroy_mutex(&data, philo);
 		free_all(&data, philo);

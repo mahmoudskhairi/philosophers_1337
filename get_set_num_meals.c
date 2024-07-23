@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:31:12 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 17:35:12 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:53:58 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_num_meals(t_philo *philo)
 
 int	get_num_meals(t_philo *philo)
 {
-	int count;
+	int	count;
 
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	count = philo->data->count_meals;

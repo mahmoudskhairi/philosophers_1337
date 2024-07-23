@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 16:17:01 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 17:39:44 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/23 07:56:01 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ int	check_meals(t_data *data, t_philo *philo, int i)
 	if (get_num_meals(philo) >= data->philos_nbr * data->eat_times)
 	{
 		set_death(philo);
-		pthread_mutex_lock(&data->print);//
-		printf(RED "end of eating !!" RESET "\n"); //
-		pthread_mutex_unlock(&data->print);//
 		pthread_mutex_unlock(&philo[i].eat_mutex);
 		return (1);
 	}

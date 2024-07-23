@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:36:41 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 17:12:21 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:54:28 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_usleep(int time_to_sleep, t_philo *philo)
 	{
 		if (get_death(philo))
 			break ;
-		// if(philo->data->philos_nbr % 2 == 0)
 		usleep(200);
 	}
 }
