@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:53:53 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/06/30 17:24:32 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:01:31 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_number(char *str)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')

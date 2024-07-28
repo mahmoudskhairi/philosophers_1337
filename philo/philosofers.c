@@ -6,7 +6,7 @@
 /*   By: mskhairi <mskhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:49:33 by mskhairi          #+#    #+#             */
-/*   Updated: 2024/07/23 12:54:39 by mskhairi         ###   ########.fr       */
+/*   Updated: 2024/07/28 11:57:08 by mskhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,18 @@ void	join_threads(t_data *data, t_philo *philo)
 	}
 }
 
-void	ll(void)
-{
-	system("leaks philo");
-}
-
 int	main(int ac, char *av[])
 {
 	t_data	data;
 	t_philo	*philo;
 
-	// atexit(ll);
 	if (ac == 5 || ac == 6)
 	{
 		if (!init_data(&data, &philo, ac, av))
 			return (1);
 		if (!check_args(&data, philo, ac, av) || !init_mutex(&data, philo))
 		{
+			free_all(&data, philo);
 			printf("Error\n");
 			return (1);
 		}
@@ -87,5 +82,7 @@ int	main(int ac, char *av[])
 		destroy_mutex(&data, philo);
 		free_all(&data, philo);
 	}
+	else
+		printf("Invalid arguments\n");
 	return (0);
 }
