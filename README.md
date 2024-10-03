@@ -44,7 +44,7 @@ make
 
 <hr>
 
-### Examples whith simulation
+### Examples with simulations
 
 #### ==> Example1
 
