@@ -26,7 +26,8 @@ The <strong>Philosophers 42</strong> project is a classic synchronization proble
 
 <pre>
 git clone https://github.com/mahmoudskhairi/philosophers_42.git
-cd philosophers
+cd philosophers_42
+cd philo
 make
 </pre>
 
