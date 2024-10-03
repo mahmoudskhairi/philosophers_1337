@@ -54,7 +54,7 @@ make
   <img src="simulation1.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
 </p>
 
-<br>
+<hr>
 
 ##### Example2
 
@@ -68,7 +68,7 @@ make
 
 <p>The program simulates the philosophers' actions, ensuring proper synchronization and avoiding deadlock or resource starvation.</p>
 
-<br>
+<hr>
 
 ## Contact
 
