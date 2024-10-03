@@ -42,9 +42,11 @@ make
 ./philosophers 5 800 200 200 5
 </pre>
 
+<hr>
+
 ### Examples whith simulation
 
-##### Example1
+#### Example1
 
 <p align="center">
   <img src="example1.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
@@ -56,7 +58,7 @@ make
 
 <hr>
 
-##### Example2
+#### Example2
 
 <p align="center">
   <img src="example2.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
