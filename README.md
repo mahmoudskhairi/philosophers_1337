@@ -52,7 +52,7 @@ make
   <img src="example1.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
 </p>
 
-#### ==> Simulation
+#### ==> Simulation1
 
 <p align="center">
   <img src="simulation1.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
@@ -66,7 +66,7 @@ make
   <img src="example2.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
 </p>
 
-#### ==> Simulation
+#### ==> Simulation2
 
 <p align="center">
   <img src="simulation2.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
