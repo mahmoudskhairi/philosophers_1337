@@ -1,6 +1,6 @@
 # Philosophers 42 Project
 
-<p align="center">
+<p align="center"> 
   <img src="philo.png" alt="Libft Logo" style="max-width: 100%; height: auto;">
 </p>
 
